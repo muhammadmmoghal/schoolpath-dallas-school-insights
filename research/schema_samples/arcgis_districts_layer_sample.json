@@ -1,0 +1,39 @@
+{
+  "item_id": "9b888324392d40999ff63f5790ac8c8c",
+  "layer_url": "https://services2.arcgis.com/5MVN2jsqIrNZD4tP/arcgis/rest/services/School_Districts__2026/FeatureServer/0",
+  "layer_name": "SchoolDistricts_SY2526",
+  "http_status": 200,
+  "method": "GET",
+  "content_type": "application/json; charset=utf-8",
+  "geometry_type": "esriGeometryPolygon",
+  "object_id_field": "FID",
+  "max_record_count": 2000,
+  "supports_pagination": true,
+  "supported_query_formats": ["JSON", "geoJSON", "PBF"],
+  "statewide_count": 1017,
+  "fields": {
+    "FID": "esriFieldTypeOID",
+    "GEOID20": "esriFieldTypeString",
+    "NAME20": "esriFieldTypeString",
+    "SDLEA": "esriFieldTypeString",
+    "NAME": "esriFieldTypeString",
+    "NAME2": "esriFieldTypeString",
+    "DISTRICT_N": "esriFieldTypeInteger",
+    "DISTRICT": "esriFieldTypeString",
+    "DISTRICT_C": "esriFieldTypeString",
+    "NCES_DISTR": "esriFieldTypeString"
+  },
+  "dallas_isd_sample": {
+    "FID": 956,
+    "GEOID20": "4816230",
+    "NAME20": "Dallas Independent School District",
+    "SDLEA": "16230",
+    "NAME": "Dallas ISD",
+    "NAME2": "Dallas",
+    "DISTRICT_N": 57905,
+    "DISTRICT": "057-905",
+    "DISTRICT_C": "057905",
+    "NCES_DISTR": "4816230"
+  },
+  "note": "Polygon geometry was verified with outSR=4326 but is intentionally omitted from this small sample."
+}

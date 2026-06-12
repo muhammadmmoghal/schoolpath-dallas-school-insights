@@ -1,0 +1,25 @@
+{
+  "txssc_search": {
+    "endpoint_template": "https://manage.txssc.txstate.edu/api/v1/search-form-submit/{term}",
+    "method": "GET",
+    "status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "pears_response": []
+  },
+  "txssc_practices_report": {
+    "public_page": "https://txssc.txstate.edu/research/reports/practices/",
+    "download": "https://locker.txssc.txstate.edu/f460091c5eda8166c7e8c0a450569bdc/2016-School-Safety-Practices-Survery-Report.pdf",
+    "status": 200,
+    "content_type": "application/pdf",
+    "bytes": 381898,
+    "year": 2016,
+    "campus_identifiers": false
+  },
+  "dallas_isd_climate_reports": {
+    "landing_page": "https://mydata.dallasisd.org/",
+    "report_route": "https://mydata.dallasisd.org/PORT/SPRING_MVC/SecuredReports?group=Surveys",
+    "unauthenticated_status": 302,
+    "redirect": "https://mydata.dallasisd.org/index.jsp",
+    "public_export_found": false
+  }
+}

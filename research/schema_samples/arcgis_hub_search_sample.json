@@ -1,0 +1,25 @@
+{
+  "endpoint": "https://schoolsdata2-tea-texas.opendata.arcgis.com/api/search/v1/collections/dataset/items?limit=5",
+  "http_status": 200,
+  "method": "GET",
+  "content_type": "application/geo+json; charset=utf-8",
+  "number_matched": 43,
+  "number_returned": 5,
+  "pagination": {
+    "limit_maximum_from_openapi": 100,
+    "startindex_minimum": 1,
+    "next": "https://schoolsdata2-tea-texas.opendata.arcgis.com/api/search/v1/collections/dataset/items?limit=5&startindex=6"
+  },
+  "observed_rate_limit_headers": {
+    "X-RateLimit-Limit-PORTAL_SEARCH_THROTTLER": "10",
+    "X-RateLimit-Remaining-PORTAL_SEARCH_THROTTLER": "9",
+    "X-RateLimit-Reset-PORTAL_SEARCH_THROTTLER": "1"
+  },
+  "sample_items": [
+    {"id": "a015ac7bc44c4d738df9b6ecb4c845f2", "title": "All programs of study Polygons 2", "type": "CSV Collection"},
+    {"id": "9b0984f830bf4808852103121b15dd55", "title": "CTE ESC Regions", "type": "CSV"},
+    {"id": "87c957f2ec334c83bc2b952bf6e64344", "title": "DistCounty", "type": "CSV"},
+    {"id": "aa8baba0a0bd444a9b620e84a6d796cf", "title": "AllPOS_5S4Campus", "type": "CSV"},
+    {"id": "762dc5ff24554ea49cebb6bce21c0298", "title": "AdjacentDistrict", "type": "CSV"}
+  ]
+}

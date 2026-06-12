@@ -1,0 +1,49 @@
+{
+  "resource_id": "hzek-udky",
+  "metadata_endpoint": "https://data.texas.gov/api/views/hzek-udky",
+  "rows_endpoint": "https://data.texas.gov/resource/hzek-udky.json",
+  "http_status": 200,
+  "method": "GET",
+  "content_type": "application/json;charset=utf-8",
+  "row_count": 9763,
+  "column_count": 41,
+  "rows_updated_utc": "2025-05-14T20:50:42Z",
+  "sample": [
+    {
+      "county_number": "'001",
+      "county_name": "ANDERSON COUNTY",
+      "district_number": "'001902",
+      "district_name": "CAYUGA ISD",
+      "district_type": "INDEPENDENT",
+      "nces_district_id": "'4813200",
+      "school_number": "'001902001",
+      "school_name": "CAYUGA H S",
+      "instruction_type": "REGULAR INSTRUCTIONAL",
+      "nces_school_id": "'481320000821",
+      "school_street_address": "P O BOX 427",
+      "school_city": "CAYUGA",
+      "grade_range": "'09-12",
+      "school_enrollment_as_of_oct": "190",
+      "school_status": "Active",
+      "update_date": "2025-05-09T05:35:07.000"
+    },
+    {
+      "county_number": "'001",
+      "district_number": "'001903",
+      "district_name": "ELKHART ISD",
+      "district_type": "INDEPENDENT",
+      "school_number": "'001903002",
+      "school_name": "ELKHART DAEP",
+      "instruction_type": "DAEP INSTRUCTIONAL",
+      "charter_type": null,
+      "nces_school_id": "'481839010386",
+      "school_city": "ELKHART",
+      "grade_range": "'KG-12",
+      "school_enrollment_as_of_oct": "0",
+      "school_status": "Active",
+      "school_status_date": "2002-06-28T00:00:00.000",
+      "update_date": "2025-05-09T05:35:07.000"
+    }
+  ],
+  "note": "The live SODA JSON response omits properties whose values are null. Explicit null above documents that behavior."
+}

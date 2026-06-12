@@ -1,0 +1,71 @@
+{
+  "item_id": "80c162b9008a40d681c127874722670f",
+  "layer_url": "https://services2.arcgis.com/5MVN2jsqIrNZD4tP/arcgis/rest/services/Schools_2024_to_2025/FeatureServer/0",
+  "layer_name": "Schools2024to2025",
+  "http_status": 200,
+  "method": "GET",
+  "content_type": "application/json; charset=utf-8",
+  "geometry_type": "esriGeometryPoint",
+  "spatial_reference": 4326,
+  "object_id_field": "ObjectID",
+  "max_record_count": 2000,
+  "supports_pagination": true,
+  "supported_query_formats": ["JSON", "geoJSON", "PBF"],
+  "statewide_count": 9739,
+  "selected_fields": {
+    "USER_County_Number": "esriFieldTypeString",
+    "USER_District_Number": "esriFieldTypeString",
+    "USER_District_Name": "esriFieldTypeString",
+    "USER_District_Type": "esriFieldTypeString",
+    "USER_School_Number": "esriFieldTypeString",
+    "USER_School_Name": "esriFieldTypeString",
+    "USER_Instruction_Type": "esriFieldTypeString",
+    "USER_Charter_Type": "esriFieldTypeString",
+    "USER_NCES_School_ID": "esriFieldTypeString",
+    "USER_School_Site_Street_Address": "esriFieldTypeString",
+    "USER_School_Site_City": "esriFieldTypeString",
+    "USER_Grade_Range": "esriFieldTypeString",
+    "USER_School_Enrollment_as_of_Oc": "esriFieldTypeInteger",
+    "School_Type": "esriFieldTypeString"
+  },
+  "sample_features": [
+    {
+      "attributes": {
+        "USER_County_Number": "'043",
+        "USER_District_Number": "'043910",
+        "USER_District_Name": "PLANO ISD",
+        "USER_District_Type": "INDEPENDENT",
+        "USER_School_Number": "'043910052",
+        "USER_School_Name": "FRANKFORD MIDDLE",
+        "USER_Instruction_Type": "REGULAR INSTRUCTIONAL",
+        "USER_Charter_Type": null,
+        "USER_NCES_School_ID": "'483510007834",
+        "USER_School_Site_Street_Address": "7706 OSAGE PLAZA PKWY",
+        "USER_School_Site_City": "DALLAS",
+        "USER_Grade_Range": "'06-08",
+        "USER_School_Enrollment_as_of_Oc": 839,
+        "School_Type": "Middle School"
+      },
+      "geometry": {"x": -96.771843, "y": 32.993541}
+    },
+    {
+      "attributes": {
+        "USER_County_Number": "'057",
+        "USER_District_Number": "'057802",
+        "USER_District_Name": "PEGASUS SCHOOL OF LIBERAL ARTS AND SCIENCES",
+        "USER_District_Type": "CHARTER",
+        "USER_School_Number": "'057802001",
+        "USER_School_Name": "PEGASUS CHARTER H S",
+        "USER_Instruction_Type": "ALTERNATIVE INSTRUCTIONAL",
+        "USER_Charter_Type": "OPEN ENROLLMENT CHARTER",
+        "USER_NCES_School_ID": "'480002907561",
+        "USER_School_Site_Street_Address": "1222 COMMERCE ST STE 100",
+        "USER_School_Site_City": "DALLAS",
+        "USER_Grade_Range": "'KG-12",
+        "USER_School_Enrollment_as_of_Oc": 348,
+        "School_Type": "Elementary/Secondary"
+      },
+      "geometry": {"x": -96.801320513, "y": 32.779369503}
+    }
+  ]
+}
