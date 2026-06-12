@@ -1,0 +1,99 @@
+{
+  "source": "AskTED direct site-address download",
+  "source_url": "https://tealprod.tea.state.tx.us/Tea.AskTed.Web/Forms/DownloadSite.aspx",
+  "retrieved_utc": "2026-06-12T20:17:35.458463+00:00",
+  "sha256": "b2e243d6acfbdddb9109bf318cd320df5271fb3ad82e284de47dd31c5a50cfec",
+  "raw_row_count": 9808,
+  "enrollment_source_year": 2025,
+  "cap_applied": true,
+  "funnel": [
+    {
+      "step": "raw_rows",
+      "count": 9808
+    },
+    {
+      "step": "dallas_site_city",
+      "count": 368,
+      "filter": "School Site City == DALLAS"
+    },
+    {
+      "step": "active_status",
+      "count": 362,
+      "filter": "School Status == Active"
+    },
+    {
+      "step": "exclude_daep_jjaep",
+      "count": 346,
+      "excluded": 16,
+      "filter": "Instruction Type excludes DAEP/JJAEP keywords"
+    },
+    {
+      "step": "exclude_unknown_enrollment",
+      "count": 344,
+      "excluded": 2,
+      "filter": "Enrollment not null (sentinel -1 converted)"
+    },
+    {
+      "step": "exclude_zero_enrollment",
+      "count": 339,
+      "excluded": 5,
+      "filter": "Enrollment > 0"
+    },
+    {
+      "step": "after_dedup",
+      "count": 339
+    },
+    {
+      "step": "stratified_cap",
+      "count": 60,
+      "excluded": 279,
+      "filter": "Proportional cap to 60 by school_level \u00d7 operator_type; largest-remainder allocation; random_state=42 sample within each stratum"
+    },
+    {
+      "step": "final_cohort",
+      "count": 60
+    }
+  ],
+  "cohort_breakdown": [
+    {
+      "school_level": "elementary",
+      "operator_type": "charter",
+      "count": 3
+    },
+    {
+      "school_level": "elementary",
+      "operator_type": "isd",
+      "count": 29
+    },
+    {
+      "school_level": "high",
+      "operator_type": "charter",
+      "count": 3
+    },
+    {
+      "school_level": "high",
+      "operator_type": "isd",
+      "count": 7
+    },
+    {
+      "school_level": "middle",
+      "operator_type": "charter",
+      "count": 2
+    },
+    {
+      "school_level": "middle",
+      "operator_type": "isd",
+      "count": 7
+    },
+    {
+      "school_level": "mixed",
+      "operator_type": "charter",
+      "count": 4
+    },
+    {
+      "school_level": "mixed",
+      "operator_type": "isd",
+      "count": 5
+    }
+  ]
+}
