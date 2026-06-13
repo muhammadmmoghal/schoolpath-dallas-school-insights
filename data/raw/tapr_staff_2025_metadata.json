@@ -1,0 +1,175 @@
+{
+  "source_name": "staff",
+  "official_filename": "2025 Campus Staff Information.csv",
+  "raw_filename": "tapr_staff_2025.csv",
+  "source_url": "https://rptsvr1.tea.texas.gov/cgi/sas/broker",
+  "http_method": "POST",
+  "post_params": [
+    [
+      "_service",
+      "marykay"
+    ],
+    [
+      "_program",
+      "perfrept.perfmast.sas"
+    ],
+    [
+      "_debug",
+      "0"
+    ],
+    [
+      "tapr",
+      "all_c"
+    ],
+    [
+      "ccyy",
+      "2025"
+    ],
+    [
+      "sumlev",
+      "C"
+    ],
+    [
+      "level",
+      "Campus"
+    ],
+    [
+      "id",
+      ""
+    ],
+    [
+      "prgopt",
+      "reports/tapr/dd/dd_tapr_step_7.sas"
+    ],
+    [
+      "datafmt",
+      "csv"
+    ],
+    [
+      "dsname",
+      "STAF"
+    ],
+    [
+      "key",
+      "ST00F"
+    ],
+    [
+      "key",
+      "ST01F"
+    ],
+    [
+      "key",
+      "ST06F"
+    ],
+    [
+      "key",
+      "ST11F"
+    ],
+    [
+      "key",
+      "ST21F"
+    ],
+    [
+      "key",
+      "ST30F"
+    ],
+    [
+      "key",
+      "STKID"
+    ],
+    [
+      "key",
+      "SHEXP"
+    ],
+    [
+      "key",
+      "SHTEN"
+    ],
+    [
+      "key",
+      "SLEXP"
+    ],
+    [
+      "key",
+      "SLTEN"
+    ],
+    [
+      "key",
+      "STEXP"
+    ],
+    [
+      "key",
+      "STTEN"
+    ],
+    [
+      "key",
+      "STTOS"
+    ],
+    [
+      "key",
+      "SUTOS"
+    ],
+    [
+      "key",
+      "SSTOS"
+    ],
+    [
+      "key",
+      "STURN"
+    ],
+    [
+      "key",
+      "PSCTOSA"
+    ]
+  ],
+  "retrieved_utc": "2026-06-13T18:15:06.745290+00:00",
+  "http_status": 200,
+  "content_type": "text/&content_type.-separated-values",
+  "sha256": "356d4ac87525bef61d687127ee6de79eb4e95f5f0d6c4f0d8ef19bed6f9d130f",
+  "byte_size": 1678085,
+  "source_year": 2025,
+  "measure_year": 2025,
+  "schema_summary": {
+    "columns": [
+      "CAMPUS",
+      "CAMPNAME",
+      "DISTRICT",
+      "DISTNAME",
+      "CPSTTOST",
+      "CPSUTOST",
+      "CPSSTOST",
+      "CPST00FC",
+      "CPST01FC",
+      "CPST06FC",
+      "CPST11FC",
+      "CPST21FC",
+      "CPST30FC",
+      "CPSUTOSA",
+      "CPSSTOSA",
+      "CPSCTOSA",
+      "CPSTTOSA",
+      "CPSTTENA",
+      "CPSTEXPA",
+      "CPSHEXPA",
+      "CPSHTENA",
+      "CPSLEXPA",
+      "CPSLTENA",
+      "CPSHEXPT",
+      "CPSHTENT",
+      "CPSLEXPT",
+      "CPSLTENT",
+      "CPSTEXPT",
+      "CPSTTENT",
+      "CPST00FP",
+      "CPST01FP",
+      "CPST06FP",
+      "CPST11FP",
+      "CPST21FP",
+      "CPST30FP",
+      "CPSTKIDR"
+    ],
+    "data_row_count_estimated": 9084,
+    "header_row_index": 1
+  },
+  "raw_file": "C:\\Users\\ahmed\\Downloads\\Personal Coding Projects\\schoolpath-dallas-data\\data\\raw\\tapr_staff_2025.csv"
+}

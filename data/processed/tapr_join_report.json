@@ -1,0 +1,131 @@
+{
+  "generated_utc": "2026-06-13T18:16:37.891286+00:00",
+  "tapr_release_year": 2025,
+  "cohort_school_count": 60,
+  "tapr_matched": 60,
+  "tapr_unmatched": 0,
+  "tapr_match_pct": 100.0,
+  "tapr_statewide_rows_per_source": {
+    "student": 9084,
+    "attendance": 9084,
+    "staff": 9084
+  },
+  "tapr_statewide_merged_rows": 9084,
+  "suppression_code_totals_in_cohort": {
+    "blank": 24,
+    "-1": 6
+  },
+  "null_counts_per_output_column": {
+    "tapr_membership_all_count_2025": 0,
+    "tapr_membership_sped_count_2025": 0,
+    "tapr_membership_sped_pct_2025": 0,
+    "tapr_enrollment_all_count_2025": 0,
+    "tapr_enrollment_sped_count_2025": 0,
+    "tapr_enrollment_sped_pct_2025": 0,
+    "tapr_att_all_days_present_2024": 2,
+    "tapr_att_all_days_membership_2024": 2,
+    "tapr_att_all_rate_2024": 2,
+    "tapr_att_sped_days_present_2024": 4,
+    "tapr_att_sped_days_membership_2024": 4,
+    "tapr_att_sped_rate_2024": 4,
+    "tapr_chronic_abs_all_numerator_2024": 2,
+    "tapr_chronic_abs_all_denominator_2024": 2,
+    "tapr_chronic_abs_all_rate_2024": 2,
+    "tapr_chronic_abs_sped_numerator_2024": 2,
+    "tapr_chronic_abs_sped_denominator_2024": 2,
+    "tapr_chronic_abs_sped_rate_2024": 2,
+    "tapr_avg_teacher_exp_years_2025": 0,
+    "tapr_avg_teacher_tenure_years_2025": 0,
+    "tapr_beginning_teacher_fte_count_2025": 0,
+    "tapr_beginning_teacher_fte_pct_2025": 0,
+    "tapr_teacher_1to5yr_pct_2025": 0,
+    "tapr_teacher_6to10yr_pct_2025": 0,
+    "tapr_teacher_11to20yr_pct_2025": 0,
+    "tapr_teacher_21to30yr_pct_2025": 0,
+    "tapr_teacher_over30yr_pct_2025": 0
+  },
+  "unmatched_campus_ids": [],
+  "sources": [
+    {
+      "name": "student",
+      "official_filename": "2025 Campus Student Information.csv",
+      "raw_file": "tapr_student_2025.csv",
+      "tapr_fields": [
+        "CPETALLC",
+        "CPETSPEC",
+        "CPETSPEP",
+        "CPNTALLC",
+        "CPNTSPEC",
+        "CPNTSPEP"
+      ],
+      "output_columns": [
+        "tapr_membership_all_count_2025",
+        "tapr_membership_sped_count_2025",
+        "tapr_membership_sped_pct_2025",
+        "tapr_enrollment_all_count_2025",
+        "tapr_enrollment_sped_count_2025",
+        "tapr_enrollment_sped_pct_2025"
+      ]
+    },
+    {
+      "name": "attendance",
+      "official_filename": "2025 Campus Attendance Absenteeism Dropout.csv",
+      "raw_file": "tapr_attendance_2025.csv",
+      "tapr_fields": [
+        "CA0AT24N",
+        "CA0AT24D",
+        "CA0AT24R",
+        "CS0AT24N",
+        "CS0AT24D",
+        "CS0AT24R",
+        "CA0CA24N",
+        "CA0CA24D",
+        "CA0CA24R",
+        "CS0CA24N",
+        "CS0CA24D",
+        "CS0CA24R"
+      ],
+      "output_columns": [
+        "tapr_att_all_days_present_2024",
+        "tapr_att_all_days_membership_2024",
+        "tapr_att_all_rate_2024",
+        "tapr_att_sped_days_present_2024",
+        "tapr_att_sped_days_membership_2024",
+        "tapr_att_sped_rate_2024",
+        "tapr_chronic_abs_all_numerator_2024",
+        "tapr_chronic_abs_all_denominator_2024",
+        "tapr_chronic_abs_all_rate_2024",
+        "tapr_chronic_abs_sped_numerator_2024",
+        "tapr_chronic_abs_sped_denominator_2024",
+        "tapr_chronic_abs_sped_rate_2024"
+      ]
+    },
+    {
+      "name": "staff",
+      "official_filename": "2025 Campus Staff Information.csv",
+      "raw_file": "tapr_staff_2025.csv",
+      "tapr_fields": [
+        "CPSTEXPA",
+        "CPSTTENA",
+        "CPST00FC",
+        "CPST00FP",
+        "CPST01FP",
+        "CPST06FP",
+        "CPST11FP",
+        "CPST21FP",
+        "CPST30FP"
+      ],
+      "output_columns": [
+        "tapr_avg_teacher_exp_years_2025",
+        "tapr_avg_teacher_tenure_years_2025",
+        "tapr_beginning_teacher_fte_count_2025",
+        "tapr_beginning_teacher_fte_pct_2025",
+        "tapr_teacher_1to5yr_pct_2025",
+        "tapr_teacher_6to10yr_pct_2025",
+        "tapr_teacher_11to20yr_pct_2025",
+        "tapr_teacher_21to30yr_pct_2025",
+        "tapr_teacher_over30yr_pct_2025"
+      ]
+    }
+  ]
+}

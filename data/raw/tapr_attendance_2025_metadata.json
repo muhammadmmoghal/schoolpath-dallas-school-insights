@@ -1,0 +1,169 @@
+{
+  "source_name": "attendance",
+  "official_filename": "2025 Campus Attendance Absenteeism Dropout.csv",
+  "raw_filename": "tapr_attendance_2025.csv",
+  "source_url": "https://rptsvr1.tea.texas.gov/cgi/sas/broker",
+  "http_method": "POST",
+  "post_params": [
+    [
+      "_service",
+      "marykay"
+    ],
+    [
+      "_program",
+      "perfrept.perfmast.sas"
+    ],
+    [
+      "_debug",
+      "0"
+    ],
+    [
+      "tapr",
+      "all_c"
+    ],
+    [
+      "ccyy",
+      "2025"
+    ],
+    [
+      "sumlev",
+      "C"
+    ],
+    [
+      "level",
+      "Campus"
+    ],
+    [
+      "id",
+      ""
+    ],
+    [
+      "prgopt",
+      "reports/tapr/dd/dd_tapr_step_7.sas"
+    ],
+    [
+      "datafmt",
+      "csv"
+    ],
+    [
+      "dsname",
+      "DROP_ATT"
+    ],
+    [
+      "key",
+      "AT24"
+    ],
+    [
+      "key",
+      "CA24"
+    ],
+    [
+      "var_type",
+      "N"
+    ],
+    [
+      "var_type",
+      "D"
+    ],
+    [
+      "var_type",
+      "R"
+    ]
+  ],
+  "retrieved_utc": "2026-06-13T18:15:05.685982+00:00",
+  "http_status": 200,
+  "content_type": "text/&content_type.-separated-values",
+  "sha256": "8edd4109134a21c27771e35fc1495f2d82929ed138e75d448b467dcda05b5fd1",
+  "byte_size": 3225970,
+  "source_year": 2025,
+  "measure_year": 2024,
+  "schema_summary": {
+    "columns": [
+      "CAMPUS",
+      "CAMPNAME",
+      "DISTRICT",
+      "DISTNAME",
+      "CA0AT24N",
+      "CA0AT24D",
+      "CI0AT24N",
+      "CI0AT24D",
+      "C30AT24N",
+      "C30AT24D",
+      "C40AT24N",
+      "C40AT24D",
+      "CB0AT24N",
+      "CB0AT24D",
+      "CH0AT24N",
+      "CH0AT24D",
+      "CW0AT24N",
+      "CW0AT24D",
+      "C20AT24N",
+      "C20AT24D",
+      "CM0AT24N",
+      "CM0AT24D",
+      "CF0AT24N",
+      "CF0AT24D",
+      "CS0AT24N",
+      "CS0AT24D",
+      "CE0AT24N",
+      "CE0AT24D",
+      "CL0AT24N",
+      "CL0AT24D",
+      "CR0AT24N",
+      "CR0AT24D",
+      "CA0AT24R",
+      "C20AT24R",
+      "C30AT24R",
+      "C40AT24R",
+      "CB0AT24R",
+      "CH0AT24R",
+      "CW0AT24R",
+      "CI0AT24R",
+      "CE0AT24R",
+      "CS0AT24R",
+      "CF0AT24R",
+      "CM0AT24R",
+      "CL0AT24R",
+      "CR0AT24R",
+      "CA0CA24N",
+      "CA0CA24D",
+      "CB0CA24N",
+      "CB0CA24D",
+      "CH0CA24N",
+      "CH0CA24D",
+      "CW0CA24N",
+      "CW0CA24D",
+      "CI0CA24N",
+      "CI0CA24D",
+      "C30CA24N",
+      "C30CA24D",
+      "C40CA24N",
+      "C40CA24D",
+      "C20CA24N",
+      "C20CA24D",
+      "CE0CA24N",
+      "CE0CA24D",
+      "CS0CA24N",
+      "CS0CA24D",
+      "CL0CA24N",
+      "CL0CA24D",
+      "CR0CA24N",
+      "CR0CA24D",
+      "CA0CA24R",
+      "CB0CA24R",
+      "CH0CA24R",
+      "CW0CA24R",
+      "CI0CA24R",
+      "C30CA24R",
+      "C40CA24R",
+      "C20CA24R",
+      "CE0CA24R",
+      "CS0CA24R",
+      "CL0CA24R",
+      "CR0CA24R"
+    ],
+    "data_row_count_estimated": 9084,
+    "header_row_index": 1
+  },
+  "raw_file": "C:\\Users\\ahmed\\Downloads\\Personal Coding Projects\\schoolpath-dallas-data\\data\\raw\\tapr_attendance_2025.csv"
+}
