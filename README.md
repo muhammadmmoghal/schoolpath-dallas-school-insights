@@ -254,9 +254,130 @@ a subset of that.
 
 ---
 
-## Phases 3–4 (not yet implemented)
+## Phase 3 — CRDC 2021-22 Ingestion and Cohort Join
+
+Phase 3 downloads the 2021-22 Civil Rights Data Collection (CRDC) national ZIP
+archive, extracts the seven school-level CSV files this pipeline uses, and
+left-joins disability-related discipline, enrollment, restraint, harassment,
+referral, and offense counts to the 60-school cohort.
+
+### Prerequisites
+
+Python 3.11+ and the packages in `requirements.txt`.  
+The CRDC archive is **~832 MB** and is downloaded once; extracted CSVs and the
+ZIP are git-ignored (`data/raw/crdc_2021_22/`, `data/raw/*.zip`).
+
+### Running Phase 3
+
+**Step 1 — download and extract the CRDC archive**
+
+```
+python scripts/ingest_crdc.py
+```
+
+Streams the 832 MB ZIP to `data/raw/crdc_2021_22.zip`, then extracts seven CSV
+members to `data/raw/crdc_2021_22/SCH/`. If all seven CSVs are already present
+and the ZIP hash is unchanged, the step is skipped.
+
+Re-download and re-extract: `python scripts/ingest_crdc.py --force`
+
+Saves (committed):
+- `data/raw/crdc_2021_22_zip_metadata.json` — ZIP provenance (URL, SHA-256, size, date)
+- `data/raw/crdc_2021_22_members_metadata.json` — per-CSV column list, row count, SHA-256
+
+**Step 2 — parse, normalize, and join**
+
+```
+python scripts/build_crdc.py
+```
+
+Reads the seven CRDC CSVs, filters to cohort NCES IDs (`COMBOKEY`), converts
+the `-9` sentinel to null (preserving `0` as a real zero), merges all sources,
+and left-joins to the TAPR-enriched cohort.
+
+Saves:
+- `data/processed/cohort_crdc.csv` — 60-row cohort with TAPR + CRDC fields
+- `data/processed/cohort_crdc.parquet` — same, with typed nullable numerics
+- `data/processed/crdc_join_report.json` — match coverage, sentinel totals, null counts
+- `data/processed/data_dictionary.json` — CRDC entries appended to existing TAPR entries
+
+**Step 3 — run tests**
+
+```
+pytest tests/
+```
+
+All 118 Phase 1 + Phase 2 + Phase 3 tests pass.
+
+### CRDC source year
+
+| File | Content | Measure year |
+|---|---|---|
+| `SCH/Enrollment.csv` | Total, IDEA, Section 504 enrollment by gender | 2021-22 |
+| `SCH/Suspensions.csv` | ISS, OOS suspension counts and days missed | 2021-22 |
+| `SCH/Expulsions.csv` | Expulsions with/without services, zero-tolerance | 2021-22 |
+| `SCH/Restraint and Seclusion.csv` | Mechanical, physical, seclusion instances and students | 2021-22 |
+| `SCH/Harassment and Bullying.csv` | Disability-based harassment allegations, reported, disciplined | 2021-22 |
+| `SCH/Referrals and Arrests.csv` | Law enforcement referrals and school-related arrests | 2021-22 |
+| `SCH/Offenses.csv` | Weapon/assault/robbery/homicide incidents and indicators | 2021-22 |
+
+CRDC data are historical (2021-22 school year). Do not compare CRDC counts
+directly with current-year TAPR rates.
+
+### Fields added by Phase 3
+
+All output column names follow the pattern `crdc_<measure>_<gender>_2122`
+(raw counts) or `crdc_<measure>_total_2122` (M+F derived sums). Indicator
+columns end in `_ind_2122` and hold `"Yes"`, `"No"`, or null.
+
+**Enrollment**
+
+| Output column | CRDC field | Description |
+|---|---|---|
+| `crdc_tot_enr_m_2122` / `_f_2122` / `_total_2122` | `TOT_ENR_M/F` | Total enrollment by gender / M+F total |
+| `crdc_idea_enr_m_2122` / `_f_2122` / `_total_2122` | `SCH_ENR_IDEA_M/F` | IDEA enrollment |
+| `crdc_504_enr_m_2122` / `_f_2122` / `_total_2122` | `SCH_ENR_504_M/F` | Section 504 enrollment |
+
+**Suspensions**
+
+| Output column | Description |
+|---|---|
+| `crdc_idea_iss_students_m/f/total_2122` | IDEA students receiving in-school suspension |
+| `crdc_oos_instances_no_dis/idea/504_2122` | Out-of-school suspension instances by disability status |
+| `crdc_idea_sing/mult_oos_m/f/total_2122` | IDEA students with single / multiple OOS suspensions |
+| `crdc_idea_oos_days_missed_m/f_2122` | Days missed due to OOS suspension, IDEA students |
+
+**Expulsions, Restraint, Harassment, Referrals, Offenses** — see
+`data/processed/data_dictionary.json` for full field list.
+
+**Pipeline metadata columns**
+
+| Column | Description |
+|---|---|
+| `crdc_collection_year` | `"2021-22"` for every row |
+| `crdc_matched` | `True` if NCES school ID matched a CRDC `COMBOKEY` |
+| `crdc_suppression_codes` | JSON object: raw CRDC field name → `"-9"` for suppressed fields |
+
+### Sentinel and suppression notes
+
+| Code | CRDC meaning | Pipeline handling |
+|---|---|---|
+| `-9` | Not applicable / not reported | → `null`; recorded in `crdc_suppression_codes` |
+| `0` | Real zero (no events) | Preserved as `0.0` |
+
+CRDC 2021-22 does not apply data-quality suppression (no small-cell masking).
+Raw district-reported zeros reflect actual reporting, not absence of events.
+
+### Coverage
+
+60 of 60 cohort schools returned by the left join; 58 of 60 matched the CRDC
+file (96.7%). The 2 unmatched schools have null for all CRDC fields and
+`crdc_matched = False`.
+
+---
+
+## Phase 4 (not yet implemented)
 
 | Phase | Content |
 |---|---|
-| 3 | Accountability summary and CRDC ingestion (via NCES crosswalk) |
 | 4 | Supabase load (optional) and dashboard |
