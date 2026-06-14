@@ -617,3 +617,114 @@ Full drop reasons are in `scripts/build_final.py` (`DROPPED_LOG` dict) and in
 10. No all-null analytical columns in final dataset  
 11. Accountability score in plausible range  
 12. CRDC column coverage at least 90%
+
+---
+
+## Phase 6 — Supabase Schema, Migration, and Data Load
+
+Phase 6 uploads the final 60-school dataset to a Supabase Postgres database.
+The local CSV/Parquet files remain the source of truth; Supabase is the
+downstream read replica used by the dashboard.
+
+### Prerequisites
+
+```
+pip install -r requirements.txt   # adds supabase>=2.0.0, python-dotenv>=1.0.0
+```
+
+You also need a Supabase project. Get your credentials from
+**Project Settings → API**:
+
+| Setting | Where to find it |
+|---|---|
+| Project URL | Settings → API → Project URL |
+| Service role key | Settings → API → service_role (secret) |
+
+### Environment variables
+
+Copy `.env.example` to `.env` and fill in real values:
+
+```
+cp .env.example .env
+# edit .env with your SUPABASE_URL and SUPABASE_SERVICE_KEY
+```
+
+`.env` is git-ignored. Never commit real credentials.
+
+| Variable | Purpose |
+|---|---|
+| `SUPABASE_URL` | `https://<project-ref>.supabase.co` |
+| `SUPABASE_SERVICE_KEY` | Service role JWT — bypasses RLS for writes |
+
+### Migration instructions
+
+Migration files live in `migrations/`. Apply them once, in order:
+
+```
+# 1. Create public.schools (79 columns, campus_id PK)
+# 2. Create public.pipeline_runs (load audit table)
+# 3. Enable RLS; add SELECT-only policies for anon + authenticated
+```
+
+Apply via the Supabase dashboard SQL editor (paste each file in order), or
+via the Supabase CLI:
+
+```
+supabase db push
+```
+
+Or use the MCP server (already applied for the connected project):
+
+```
+mcp apply_migration --name create_schools --query @migrations/20260614000001_create_schools.sql
+```
+
+### Load command
+
+After migrations are applied and `.env` is configured:
+
+```
+python scripts/load_supabase.py
+```
+
+The script:
+1. Reads `data/processed/dallas_school_insights.parquet`
+2. Deletes all existing rows from `public.schools`
+3. Inserts 60 rows in chunks
+4. Validates that exactly 60 rows are present
+5. Appends one record to `public.pipeline_runs`
+
+### Security model
+
+| Role | schools | pipeline_runs |
+|---|---|---|
+| `anon` | SELECT only | no access |
+| `authenticated` | SELECT only | no access |
+| `service_role` | full access (bypasses RLS) | full access |
+
+Public INSERT / UPDATE / DELETE are not permitted.
+
+### Local fallback
+
+The local CSV and Parquet files are always the authoritative source:
+
+```
+data/processed/dallas_school_insights.csv     # human-readable
+data/processed/dallas_school_insights.parquet # typed, used by load script
+```
+
+If Supabase is unavailable, read from these files directly.
+
+### Run Phase 6 tests
+
+```
+pytest tests/test_phase6.py -v
+```
+
+These tests are entirely local (no network) and verify:
+- Migration files exist and contain correct DDL
+- All 79 final columns appear in the migration SQL
+- RLS is enabled with SELECT-only policies; no public write policies
+- `.env.example` has required credential keys
+- `load_supabase.py` references correct env vars, parquet, and row count
+- `_nan_to_none` correctly handles NaN / pd.NA / numpy scalars
