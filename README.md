@@ -728,3 +728,90 @@ These tests are entirely local (no network) and verify:
 - `.env.example` has required credential keys
 - `load_supabase.py` references correct env vars, parquet, and row count
 - `_nan_to_none` correctly handles NaN / pd.NA / numpy scalars
+
+---
+
+## Phase 7 — Streamlit Dashboard
+
+A four-page Streamlit dashboard that reads from Supabase when credentials are
+available and falls back to the local Parquet file automatically.
+
+### Local run
+
+```
+pip install -r requirements.txt
+streamlit run dashboard/app.py
+```
+
+Opens at **http://localhost:8501**.
+
+### Environment variables (optional)
+
+| Variable | Purpose |
+|---|---|
+| `SUPABASE_URL` | `https://<project-ref>.supabase.co` — enables live Supabase reads |
+| `SUPABASE_ANON_KEY` | Supabase anonymous (public) key — used by the dashboard (not the service role key) |
+
+If neither variable is set, the dashboard silently falls back to
+`data/processed/dallas_school_insights.parquet`. A badge in the sidebar
+shows which source is active.
+
+### Data source fallback behaviour
+
+1. Dashboard calls `dashboard/data_loader.py:load_data()`.
+2. If `SUPABASE_URL` and `SUPABASE_ANON_KEY` are both set, it queries
+   `public.schools` via the Supabase Python client.
+3. On any error (missing credentials, network failure, empty response), it
+   loads `data/processed/dallas_school_insights.parquet` instead.
+4. Every page displays a **"Data source"** badge showing which path was used.
+
+### Dashboard pages
+
+| Page | File | Content |
+|---|---|---|
+| **School Explorer** | `dashboard/pages/01_school_explorer.py` | Summary cards (total schools, ISD/charter split, median enrollment, A/B share); filters for level, operator, rating, enrollment; Dallas map (Plotly Mapbox); sortable school table |
+| **Special Education** | `dashboard/pages/02_special_education.py` | TAPR SpEd % distribution and ranked bar; CRDC IDEA enrollment; disability ISS/OOS/expulsion/restraint/seclusion/harassment counts (tabs); nulls preserved and labelled |
+| **Culture & Safety** | `dashboard/pages/03_culture_safety.py` | Attendance and chronic absence rates (TAPR 2024); OOS suspension instances by disability status (CRDC 2021-22); teacher experience distribution; accountability as context; explicit note that climate survey data was unavailable |
+| **School Detail** | `dashboard/pages/04_school_detail.py` | All available fields for one school; missing fields table with documented reasons; source coverage report |
+
+### Dashboard files
+
+```
+dashboard/
+  app.py                      Main entry point / home page
+  data_loader.py              Supabase → Parquet fallback loader
+  components.py               Reusable Plotly/Streamlit components
+  pages/
+    01_school_explorer.py
+    02_special_education.py
+    03_culture_safety.py
+    04_school_detail.py
+.streamlit/
+  config.toml                 Theme and server settings
+```
+
+### Phase 7 tests
+
+```
+pytest tests/test_phase7.py -v
+```
+
+36 tests covering:
+- Local Parquet fallback loading
+- Supabase failure triggers fallback (mocked)
+- Required columns present after load
+- Filters preserve valid rows and all columns
+- All-null subsets handled without crash
+- Null values not silently converted to zero
+- All dashboard files exist
+
+### Known data limitations
+
+- No public climate survey data (student/staff satisfaction, PEARS incidents)
+  was available for this cohort. Culture & Safety uses attendance, chronic
+  absence, and discipline counts as proxy indicators only.
+- CRDC data are from 2021-22. Do not compare CRDC counts with current TAPR rates.
+- 2 of 60 schools (NCES IDs 481623022813, 480021123204) have no CRDC match;
+  all CRDC columns are null for those two rows.
+- ArcGIS coordinates are geocoder output for approximate display only.
+- "Not Rated" is a real TEA designation — not missing data.
