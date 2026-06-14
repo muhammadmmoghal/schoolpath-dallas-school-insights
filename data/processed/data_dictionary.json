@@ -1,12 +1,13 @@
 {
   "schema_version": 1,
-  "generated_utc": "2026-06-13T19:16:57.600509+00:00",
+  "generated_utc": "2026-06-14T18:00:08.140185+00:00",
   "tapr_release_year": 2025,
   "notes": [
     "Attendance fields (tapr_att_*, tapr_chronic_abs_*) have measure_year=2024 because TEA distributes 2024 attendance data in the 2024-25 TAPR release.",
     "TEA masking codes -1/-2/-3 and blank values are all stored as null. The tapr_suppression_codes column preserves the original per-campus codes.",
     "Teacher turnover, teacher certification, LRE/inclusion, DAEP rate, ISS, OSS, expulsion, restraint, and seclusion are excluded because they are not present in the verified 2024-25 TAPR campus files (see research/tapr_discovery.md).",
-    "CRDC 2021-22 fields added. Data are historical (2021-22). Sentinel -9 = not applicable; 0 = real zero. No data-quality suppression was applied by ED for 2021-22."
+    "CRDC 2021-22 fields added. Data are historical (2021-22). Sentinel -9 = not applicable; 0 = real zero. No data-quality suppression was applied by ED for 2021-22.",
+    "Phase 4 (2025 accountability + ArcGIS 2024-25 coordinates) fields added."
   ],
   "fields": [
     {
@@ -1235,6 +1236,209 @@
       "source": "pipeline",
       "description": "JSON object mapping original CRDC field name to '-9' for any field whose value was -9 (not applicable / not reported). Null if no fields were suppressed for this campus.",
       "type": "string (JSON)"
+    },
+    {
+      "column": "accountability_rating_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "C_RATING",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Overall campus accountability rating",
+      "type": "string",
+      "unit": "category",
+      "notes": "Values: A, B, C, D, F, 'Not Rated'. Null if campus not in file. 'Not Rated' is a real TEA designation (new schools, DAEP campuses, etc.); it is NOT equivalent to missing data."
+    },
+    {
+      "column": "accountability_status_2025",
+      "source": "derived",
+      "source_year": 2025,
+      "description": "Derived accountability status. 'Rated' when C_RATING is A/B/C/D/F; 'Not Rated' when C_RATING is 'Not Rated'; null when campus is not in the 2025 accountability file.",
+      "type": "string",
+      "unit": "category"
+    },
+    {
+      "column": "accountability_score_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "CDALLS",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Overall campus numeric accountability score",
+      "type": "float",
+      "unit": "score (0\u2013100)",
+      "notes": "Null for 'Not Rated' campuses and for unmatched campuses."
+    },
+    {
+      "column": "acct_grade_type_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "GRDTYPE",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Grade-configuration type code (S=single, E=elementary, etc.)",
+      "type": "string",
+      "unit": "code"
+    },
+    {
+      "column": "acct_grade_span_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "GRDSPAN",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Grade span label (e.g. '09 - 12')",
+      "type": "string",
+      "unit": "label"
+    },
+    {
+      "column": "acct_grade_low_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "GRDLOW",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Lowest grade served",
+      "type": "string",
+      "unit": "grade"
+    },
+    {
+      "column": "acct_grade_high_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "GRDHIGH",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Highest grade served",
+      "type": "string",
+      "unit": "grade"
+    },
+    {
+      "column": "acct_charter_flag_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "CFLCHART",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Charter campus flag (Y/N)",
+      "type": "string",
+      "unit": "flag"
+    },
+    {
+      "column": "acct_alt_ed_flag_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "CFLAEC",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Alternative education campus flag (Y/N)",
+      "type": "string",
+      "unit": "flag"
+    },
+    {
+      "column": "acct_alt_ed_type_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "CFLAEATYPE",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Alternative education campus type",
+      "type": "string",
+      "unit": "category"
+    },
+    {
+      "column": "acct_daep_flag_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "CFLDAEP",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "DAEP campus flag (Y/N)",
+      "type": "string",
+      "unit": "flag"
+    },
+    {
+      "column": "acct_jj_flag_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "CFLJJ",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Juvenile Justice campus flag (Y/N)",
+      "type": "string",
+      "unit": "flag"
+    },
+    {
+      "column": "acct_alted_flag_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "CFLALTED",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Other alternative education flag (Y/N)",
+      "type": "string",
+      "unit": "flag"
+    },
+    {
+      "column": "acct_residential_flag_2025",
+      "source": "TEA 2025 Campus Accountability Summary",
+      "source_year": 2025,
+      "measure_year": 2025,
+      "acct_field": "CFLRTF",
+      "acct_file": "2025 Campus Accountability Summary.csv",
+      "description": "Residential Treatment Facility flag (Y/N)",
+      "type": "string",
+      "unit": "flag"
+    },
+    {
+      "column": "accountability_source_year",
+      "source": "pipeline",
+      "description": "TEA accountability release year (2025) for all rows.",
+      "type": "integer"
+    },
+    {
+      "column": "accountability_matched",
+      "source": "pipeline",
+      "description": "True if this campus_id matched a CAMPUS row in the 2025 TEA campus accountability file. False if the campus is not in that file (all accountability fields null).",
+      "type": "boolean"
+    },
+    {
+      "column": "latitude",
+      "source": "TEA ArcGIS Schools 2024-25",
+      "source_year": "2024-25",
+      "arcgis_item_id": "80c162b9008a40d681c127874722670f",
+      "description": "Campus latitude (WGS84 decimal degrees, from ArcGIS point geometry).",
+      "type": "float",
+      "unit": "decimal degrees",
+      "notes": "Geocoder output from a 2024-25 ArcGIS snapshot derived from AskTED. For display and approximate mapping only. Dallas schools expected in range [32.5, 33.2]."
+    },
+    {
+      "column": "longitude",
+      "source": "TEA ArcGIS Schools 2024-25",
+      "source_year": "2024-25",
+      "arcgis_item_id": "80c162b9008a40d681c127874722670f",
+      "description": "Campus longitude (WGS84 decimal degrees, from ArcGIS point geometry).",
+      "type": "float",
+      "unit": "decimal degrees",
+      "notes": "Geocoder output from a 2024-25 ArcGIS snapshot derived from AskTED. For display and approximate mapping only. Dallas schools expected in range [-97.2, -96.4]."
+    },
+    {
+      "column": "geocode_source",
+      "source": "pipeline",
+      "description": "Source of the latitude/longitude coordinates. 'TEA ArcGIS Schools 2024-25' for matched campuses; null if unmatched.",
+      "type": "string"
+    },
+    {
+      "column": "arcgis_source_year",
+      "source": "pipeline",
+      "description": "ArcGIS layer school year (2024-25) for all rows.",
+      "type": "string"
+    },
+    {
+      "column": "arcgis_matched",
+      "source": "pipeline",
+      "description": "True if this campus_id matched a feature in the ArcGIS Schools 2024-25 layer. False if the campus has no ArcGIS feature (latitude/longitude null).",
+      "type": "boolean"
     }
   ]
 }

@@ -1,0 +1,32 @@
+{
+  "source": "TEA ArcGIS Schools 2024-25",
+  "item_id": "80c162b9008a40d681c127874722670f",
+  "layer_url": "https://services2.arcgis.com/5MVN2jsqIrNZD4tP/arcgis/rest/services/Schools_2024_to_2025/FeatureServer/0",
+  "query_url": "https://services2.arcgis.com/5MVN2jsqIrNZD4tP/arcgis/rest/services/Schools_2024_to_2025/FeatureServer/0/query",
+  "item_modified": "2026-01-15",
+  "source_year": "2024-25",
+  "method": "GET",
+  "out_fields": "USER_School_Number,USER_School_Name,USER_School_Site_City,School_Type",
+  "geometry_included": true,
+  "spatial_reference": 4326,
+  "retrieved_utc": "2026-06-14T17:59:53.369208+00:00",
+  "sha256": "1a59dfcbdcd8063cbb7d8b64009c092adfa4a612ec804cc7051160a934e42959",
+  "byte_size": 19632,
+  "campus_ids_requested": 60,
+  "features_returned": 60,
+  "schema_summary": {
+    "geometry_type": "esriGeometryPoint",
+    "coordinate_fields": [
+      "geometry.y \u2192 latitude",
+      "geometry.x \u2192 longitude"
+    ],
+    "attribute_fields": [
+      "USER_School_Number",
+      "USER_School_Name",
+      "USER_School_Site_City",
+      "School_Type"
+    ],
+    "coordinate_system": "WGS84 (EPSG:4326)",
+    "caveat": "Coordinates are from a 2024-25 ArcGIS snapshot derived from AskTED. Point locations are geocoder output and may differ from the exact building footprint. Use for display only."
+  }
+}

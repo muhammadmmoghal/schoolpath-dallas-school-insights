@@ -376,8 +376,100 @@ file (96.7%). The 2 unmatched schools have null for all CRDC fields and
 
 ---
 
-## Phase 4 (not yet implemented)
+## Phase 4 — Accountability Ratings and Coordinates
 
-| Phase | Content |
+Phase 4 joins two additional verified sources to the 60-school cohort:
+
+1. **TEA 2025 campus accountability ratings** (letter grades A–F and "Not Rated")
+2. **TEA ArcGIS Schools 2024-25** (geocoded latitude/longitude)
+
+### Prerequisites
+
+Python 3.11+ and the packages in `requirements.txt`. Internet access for
+the one-time data fetch.
+
+### Running Phase 4
+
+**Step 1 — download raw sources**
+
+```
+python scripts/ingest_accountability.py
+python scripts/ingest_arcgis.py
+```
+
+Saves to `data/raw/` (CSV and JSON files are git-ignored; `*_metadata.json`
+files are committed):
+- `accountability_2025.csv` + `accountability_2025_metadata.json`
+- `arcgis_schools_raw.json` + `arcgis_schools_metadata.json`
+
+Re-download with `--force`.
+
+**Step 2 — join and build enriched cohort**
+
+```
+python scripts/build_enriched.py
+```
+
+Saves:
+- `data/processed/cohort_enriched.csv`
+- `data/processed/cohort_enriched.parquet`
+- `data/processed/accountability_join_report.json`
+- `data/processed/arcgis_join_report.json`
+- `data/processed/data_dictionary.json` — Phase 4 entries appended
+
+**Step 3 — run tests**
+
+```
+pytest tests/
+```
+
+All Phase 1–4 tests pass.
+
+### Fields added by Phase 4
+
+**Accountability (source: TEA 2025 Campus Accountability Summary)**
+
+| Output column | Source field | Description |
+|---|---|---|
+| `accountability_rating_2025` | `C_RATING` | Overall rating: A / B / C / D / F / "Not Rated" |
+| `accountability_status_2025` | derived | "Rated" (A–F) / "Not Rated" / null (unmatched) |
+| `accountability_score_2025` | `CDALLS` | Numeric score (nullable float) |
+| `acct_grade_type_2025` | `GRDTYPE` | Grade-configuration type code |
+| `acct_grade_span_2025` | `GRDSPAN` | Grade span label |
+| `acct_grade_low_2025` | `GRDLOW` | Lowest grade served |
+| `acct_grade_high_2025` | `GRDHIGH` | Highest grade served |
+| `acct_charter_flag_2025` | `CFLCHART` | Charter campus flag (Y/N) |
+| `acct_alt_ed_flag_2025` | `CFLAEC` | Alternative education flag (Y/N) |
+| `acct_alt_ed_type_2025` | `CFLAEATYPE` | Alt-ed type (if present in download) |
+| `acct_daep_flag_2025` | `CFLDAEP` | DAEP flag (if present) |
+| `acct_jj_flag_2025` | `CFLJJ` | Juvenile Justice flag (if present) |
+| `acct_alted_flag_2025` | `CFLALTED` | Other alt-ed flag (if present) |
+| `acct_residential_flag_2025` | `CFLRTF` | Residential Treatment Facility flag (if present) |
+| `accountability_source_year` | pipeline | 2025 (constant) |
+| `accountability_matched` | pipeline | True if campus matched the statewide file |
+
+**Coordinates (source: TEA ArcGIS Schools 2024-25)**
+
+| Output column | Description |
 |---|---|
-| 4 | Supabase load (optional) and dashboard |
+| `latitude` | WGS84 decimal degrees (geometry.y from ArcGIS point) |
+| `longitude` | WGS84 decimal degrees (geometry.x from ArcGIS point) |
+| `geocode_source` | "TEA ArcGIS Schools 2024-25" or null (unmatched) |
+| `arcgis_source_year` | "2024-25" (constant) |
+| `arcgis_matched` | True if campus had a feature in the ArcGIS layer |
+
+### Caveats
+
+- **"Not Rated" is not missing data.** TEA assigns "Not Rated" to new schools,
+  DAEP campuses, and other campuses that are assessed but exempted from a letter
+  grade. `accountability_rating_2025 = "Not Rated"` is a real value; null means
+  the campus was not in the accountability file at all.
+- **ArcGIS coordinates are geocoder output**, derived from a 2024-25 AskTED
+  snapshot. They may differ from the exact building location. Use for display and
+  approximate mapping only; do not use for surveying or legal boundaries.
+- **ArcGIS item was last modified 2026-01-15** (data content is school year
+  2024-25). Campus IDs that appeared after that update may not have coordinates.
+- **Optional flag columns** (CFLAEATYPE, CFLDAEP, CFLJJ, CFLALTED, CFLRTF) are
+  included only if they appear in the downloaded accountability CSV. Their
+  presence is recorded in `accountability_join_report.json`
+  (`optional_columns_present`).

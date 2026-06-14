@@ -1,0 +1,22 @@
+{
+  "generated_utc": "2026-06-14T18:00:08.136169+00:00",
+  "source": "TEA ArcGIS Schools 2024-25",
+  "item_id": "80c162b9008a40d681c127874722670f",
+  "source_year": "2024-25",
+  "cohort_school_count": 60,
+  "arcgis_matched": 60,
+  "arcgis_unmatched": 0,
+  "arcgis_match_pct": 100.0,
+  "schools_with_coordinates": 60,
+  "coordinate_bounds": {
+    "latitude_min": 32.63958900000006,
+    "latitude_max": 32.99869711200006,
+    "longitude_min": -96.98377949999997,
+    "longitude_max": -96.64161299999995
+  },
+  "null_counts": {
+    "latitude": 0,
+    "longitude": 0
+  },
+  "unmatched_campus_ids": []
+}

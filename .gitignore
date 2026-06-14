@@ -3,6 +3,7 @@ data/raw/*.csv
 data/raw/*.csv.bak
 data/raw/*.zip
 data/raw/crdc_2021_22/
+data/raw/*_raw.json
 
 # Python
 __pycache__/

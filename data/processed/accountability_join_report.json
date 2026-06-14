@@ -1,0 +1,49 @@
+{
+  "generated_utc": "2026-06-14T18:00:08.132674+00:00",
+  "source_year": 2025,
+  "official_filename": "2025 Campus Accountability Summary.csv",
+  "cohort_school_count": 60,
+  "accountability_matched": 60,
+  "accountability_unmatched": 0,
+  "accountability_match_pct": 100.0,
+  "rating_distribution": {
+    "D": 10,
+    "B": 22,
+    "F": 2,
+    "A": 18,
+    "C": 8
+  },
+  "not_rated_count": 0,
+  "optional_columns_present": [
+    "acct_grade_type_2025",
+    "acct_grade_span_2025",
+    "acct_grade_low_2025",
+    "acct_grade_high_2025",
+    "acct_charter_flag_2025",
+    "acct_alt_ed_flag_2025",
+    "acct_alt_ed_type_2025",
+    "acct_daep_flag_2025",
+    "acct_jj_flag_2025",
+    "acct_alted_flag_2025",
+    "acct_residential_flag_2025"
+  ],
+  "null_counts_per_output_column": {
+    "accountability_rating_2025": 0,
+    "accountability_status_2025": 0,
+    "accountability_score_2025": 0,
+    "acct_grade_type_2025": 0,
+    "acct_grade_span_2025": 0,
+    "acct_grade_low_2025": 0,
+    "acct_grade_high_2025": 0,
+    "acct_charter_flag_2025": 0,
+    "acct_alt_ed_flag_2025": 0,
+    "acct_alt_ed_type_2025": 60,
+    "acct_daep_flag_2025": 0,
+    "acct_jj_flag_2025": 0,
+    "acct_alted_flag_2025": 0,
+    "acct_residential_flag_2025": 0,
+    "accountability_source_year": 0,
+    "accountability_matched": 0
+  },
+  "unmatched_campus_ids": []
+}
