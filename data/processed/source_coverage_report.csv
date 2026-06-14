@@ -1,0 +1,6 @@
+source,source_year,primary_join_key,schools_matched,schools_total,match_pct,notes
+TEA AskTED,2025,campus_id,60,60,100.0,Canonical roster; all cohort schools by definition.
+TAPR,2025,campus_id,60,60,100.0,
+CRDC,2021-22,nces_school_id (= COMBOKEY),58,60,96.7,2 cohort schools had no CRDC match on NCES school ID.
+TEA 2025 Campus Accountability Summary,2025,campus_id,60,60,100.0,
+TEA ArcGIS Schools 2024-25,2024-25,campus_id,60,60,100.0,Coordinates for display only; geocoder output from ArcGIS snapshot.

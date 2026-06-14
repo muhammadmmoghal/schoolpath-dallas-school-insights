@@ -3,6 +3,56 @@
 A reproducible, source-verified dataset comparing Dallas public schools across
 special-education support, culture, and safety dimensions.
 
+## Final Dataset — `data/processed/dallas_school_insights.csv`
+
+**60 rows x 79 columns** — one row per Dallas public school.
+
+| Dimension | Detail |
+|---|---|
+| Row count | 60 schools |
+| Column count | 79 |
+| Source coverage | AskTED 100%, TAPR 100%, Accountability 100%, ArcGIS 100%, CRDC 96.7% (58/60) |
+| CRDC data year | 2021-22 (historical) |
+| Accountability year | 2025 |
+| TAPR year | 2025 (attendance measures are 2024) |
+| Quality checks | 12/12 pass (see `data/processed/data_quality_report.json`) |
+
+**Rebuild the entire pipeline from existing raw files**
+
+```
+python scripts/build_cohort.py
+python scripts/build_tapr.py
+python scripts/build_crdc.py
+python scripts/build_enriched.py
+python scripts/build_final.py
+pytest tests/
+```
+
+To re-download all raw sources first (requires internet):
+
+```
+python scripts/ingest_askted.py
+python scripts/ingest_tapr.py
+python scripts/ingest_crdc.py
+python scripts/ingest_accountability.py
+python scripts/ingest_arcgis.py
+```
+
+**Key caveats**
+
+- Null values mean "not reported / suppressed / not applicable". They are never
+  treated as zero.
+- CRDC discipline and enrollment data are from 2021-22 and should not be compared
+  directly with current-year TAPR rates.
+- Accountability "Not Rated" is a real TEA designation, not missing data.
+- ArcGIS coordinates are geocoder output for display only.
+- 2 of 60 schools (NCES IDs 481623022813 and 480021123204) have no CRDC match;
+  all CRDC columns are null for those two rows.
+- `acct_alt_ed_type_2025` was dropped (all-null for the cohort). See
+  `data/processed/data_dictionary.csv` for the full drop log.
+
+---
+
 **Approved sources (all phases)**
 | Source | Purpose | Join key |
 |---|---|---|
@@ -473,3 +523,97 @@ All Phase 1–4 tests pass.
   included only if they appear in the downloaded accountability CSV. Their
   presence is recorded in `accountability_join_report.json`
   (`optional_columns_present`).
+
+---
+
+## Phase 5 — Final Dataset Cleanup and Submission Exports
+
+Phase 5 reads `cohort_enriched.csv` (151 columns), drops 72 columns with
+documented reasons, validates 12 quality checks, and writes the submission-ready
+dataset plus supporting metadata files.
+
+### Prerequisites
+
+Python 3.11+ and the packages in `requirements.txt`.  
+`data/processed/cohort_enriched.csv` must already exist (output of Phase 4).
+
+### Running Phase 5
+
+```
+python scripts/build_final.py
+```
+
+Saves:
+
+| File | Description |
+|---|---|
+| `data/processed/dallas_school_insights.csv` | Final dataset — 60 rows x 79 columns |
+| `data/processed/dallas_school_insights.parquet` | Same, with typed nullable numerics |
+| `data/processed/data_dictionary.csv` | Schema for all 79 columns |
+| `data/processed/data_quality_report.json` | 12 automated quality checks |
+| `data/processed/source_coverage_report.csv` | Match rate per source |
+
+**Run tests**
+
+```
+pytest tests/
+```
+
+All 253 Phase 1–5 tests pass.
+
+### Column selection rationale
+
+79 of the 151 enriched columns are included in the final dataset. The 72 dropped
+columns fall into these categories:
+
+| Category | Count | Examples |
+|---|---|---|
+| Pipeline flags / constant metadata | 11 | `tapr_matched`, `crdc_collection_year`, `geocode_source` |
+| TAPR numerators / denominators (rates kept) | 9 | `tapr_att_all_days_present_2024`, `tapr_chronic_abs_all_numerator_2024` |
+| Accountability — redundant or all-null | 2 | `acct_charter_flag_2025` (dup of `district_type`), `acct_alt_ed_type_2025` (all-null) |
+| CRDC all-null columns | 10 | non-binary gender counts (`_x_`), mechanical/seclusion student counts |
+| CRDC very sparse columns | 3 | `crdc_rs_phys_students_*` (4/60 schools have data) |
+| CRDC M/F breakdowns (totals kept) | 37 | `crdc_tot_enr_m_2122`, `crdc_idea_iss_students_f_2122`, … |
+
+Full drop reasons are in `scripts/build_final.py` (`DROPPED_LOG` dict) and in
+`data/processed/data_dictionary.csv` (`caveat` column).
+
+### Data dictionary schema
+
+`data/processed/data_dictionary.csv` has one row per final column:
+
+| Column | Meaning |
+|---|---|
+| `column_name` | Column name in `dallas_school_insights.csv` |
+| `data_type` | Python/pandas type |
+| `definition` | Plain-English description |
+| `source` | Originating data source |
+| `source_year` | Year of the source data |
+| `raw_cleaned_or_derived` | cleaned = sentinel removal / type coercion; derived = computed from other columns |
+| `coverage_percent` | % of 60 rows with a non-null value |
+| `caveat` | Suppression rules, known gaps, or interpretation notes |
+
+### Source coverage
+
+| Source | Year | Matched / 60 | % |
+|---|---|---|---|
+| TEA AskTED | 2025 | 60 | 100% |
+| TAPR | 2025 | 60 | 100% |
+| TEA Accountability | 2025 | 60 | 100% |
+| TEA ArcGIS Schools | 2024-25 | 60 | 100% |
+| CRDC | 2021-22 | 58 | 96.7% |
+
+### Quality checks (all passing)
+
+1. Row count equals 60  
+2. No duplicate campus IDs  
+3. No duplicate NCES school IDs  
+4. Required identity fields fully populated  
+5. All percentage columns in [0, 100]  
+6. All count columns non-negative  
+7. Accountability rating codes only A/B/C/D/F/"Not Rated" or null  
+8. Latitude in [32.5, 33.2], longitude in [-97.2, -96.4]  
+9. No suppression sentinels (-1/-2/-3/-9) remaining in output  
+10. No all-null analytical columns in final dataset  
+11. Accountability score in plausible range  
+12. CRDC column coverage at least 90%

@@ -1,0 +1,76 @@
+{
+  "generated_utc": "2026-06-14T18:24:28.701654+00:00",
+  "total_checks": 12,
+  "checks_passed": 12,
+  "checks_failed": 0,
+  "all_checks_passed": true,
+  "checks": [
+    {
+      "name": "row_count_equals_60",
+      "passed": true,
+      "value": 60
+    },
+    {
+      "name": "no_duplicate_campus_ids",
+      "passed": true,
+      "duplicate_count": 0
+    },
+    {
+      "name": "no_duplicate_nces_ids",
+      "passed": true,
+      "duplicate_count": 0
+    },
+    {
+      "name": "required_identity_fields_populated",
+      "passed": true,
+      "missing_counts": {
+        "campus_id": 0,
+        "school_name": 0,
+        "district_name": 0,
+        "school_site_address": 0,
+        "enrollment": 0
+      }
+    },
+    {
+      "name": "valid_percentages_in_range_0_100",
+      "passed": true,
+      "violations": {}
+    },
+    {
+      "name": "valid_counts_nonnegative",
+      "passed": true,
+      "violations": {}
+    },
+    {
+      "name": "valid_accountability_rating_codes",
+      "passed": true,
+      "invalid_values": []
+    },
+    {
+      "name": "valid_dallas_coordinates",
+      "passed": true,
+      "out_of_range_lat": 0,
+      "out_of_range_lon": 0
+    },
+    {
+      "name": "no_suppression_sentinels",
+      "passed": true,
+      "sentinel_counts": {}
+    },
+    {
+      "name": "no_all_null_analytical_columns",
+      "passed": true,
+      "all_null_columns": []
+    },
+    {
+      "name": "accountability_score_in_range",
+      "passed": true,
+      "out_of_range": 0
+    },
+    {
+      "name": "crdc_coverage_at_least_90pct",
+      "passed": true,
+      "worst_coverage_pct": 95.0
+    }
+  ]
+}
