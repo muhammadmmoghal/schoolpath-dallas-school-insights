@@ -276,8 +276,8 @@ class TestNoAllNullAnalytical:
 @pytest.mark.skipif(SKIP_INTEGRATION, reason=SKIP_MSG)
 class TestDataDictionary:
     _REQUIRED_COLS = {
-        "column_name", "data_type", "definition", "source", "source_year",
-        "raw_cleaned_or_derived", "coverage_percent", "caveat",
+        "column_name", "display_name", "data_type", "definition", "source", "source_year",
+        "derivation_method", "coverage_percent", "null_suppression_notes", "caveat",
     }
 
     def test_data_dictionary_exists(self):
