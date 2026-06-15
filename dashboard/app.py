@@ -7,9 +7,6 @@ Run with:
 import sys
 from pathlib import Path
 
-# Ensure this directory (dashboard/) is first on sys.path so that every page
-# executed via st.navigation() can import data_loader and components without
-# relying on __file__ resolution inside each page file.
 _DASHBOARD_DIR = str(Path(__file__).parent.resolve())
 if _DASHBOARD_DIR not in sys.path:
     sys.path.insert(0, _DASHBOARD_DIR)
@@ -17,11 +14,18 @@ if _DASHBOARD_DIR not in sys.path:
 import streamlit as st
 
 st.set_page_config(
-    page_title="SchoolPath Dallas",
+    page_title="SchoolPath Data",
     page_icon="\U0001f3eb",
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Inject design system CSS before any page content renders.
+from styles import inject_global_styles, render_sidebar_brand
+inject_global_styles()
+
+# Sidebar brand mark — appears on every page.
+render_sidebar_brand()
 
 pg = st.navigation(
     [

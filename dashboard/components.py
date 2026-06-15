@@ -1,5 +1,6 @@
 """
 Reusable Streamlit UI components for the SchoolPath Dallas dashboard.
+Visual styling is centralized in styles.py.
 """
 from __future__ import annotations
 
@@ -9,6 +10,8 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+
+from styles import inject_global_styles  # re-exported for backwards compatibility
 
 RATING_ORDER = ["A", "B", "C", "D", "F", "Not Rated"]
 RATING_COLORS = {
@@ -30,6 +33,11 @@ OPERATOR_LABELS: dict[str, str] = {
     "isd": "Independent School District",
     "charter": "Charter School",
 }
+
+
+# Keep inject_global_css as an alias so any code that calls it keeps working.
+def inject_global_css() -> None:
+    inject_global_styles()
 
 
 def fmt_value(val, fmt: str = "auto", unit: str = "") -> str:
@@ -70,13 +78,12 @@ def fmt_value(val, fmt: str = "auto", unit: str = "") -> str:
 
 def source_badge(source: str, *, show_technical_expander: bool = False) -> None:
     """
-    Render a data-source status badge.
-    Displays a user-friendly label; optionally exposes the internal label in an expander.
+    Render a compact source badge (plain / light-background variant).
+    Also ensures global styles are injected.
     """
-    from data_loader import friendly_source_label
-    friendly = friendly_source_label(source)
-    icon = "🟢" if "Supabase" in source else "🟡"
-    st.info(f"{icon} **Data source:** {friendly}", icon=None)
+    inject_global_styles()
+    from styles import render_source_badge
+    render_source_badge(source)
     if show_technical_expander:
         with st.expander("Technical source details"):
             st.code(source)
@@ -94,6 +101,11 @@ def null_note(col_name: str, n_null: int, total: int, friendly_name: str = "") -
             f"⚠ {n_null} of {total} schools ({pct:.0f}%) have no reported value "
             f"for **{display_name}** — shown as missing, not zero."
         )
+
+
+# ── Chart components ───────────────────────────────────────────────────────────
+
+_FONT = dict(family="'DM Sans', 'Inter', sans-serif", size=12, color="#334155")
 
 
 def bar_chart(
@@ -119,6 +131,7 @@ def bar_chart(
         orientation="h",
         height=height,
     )
+    fig.update_layout(font=_FONT, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
     _annotate_source(fig, source_label)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -153,7 +166,12 @@ def scatter_map(
         center={"lat": 32.78, "lon": -96.8},
         height=height,
     )
-    fig.update_layout(legend_title_text="Rating", margin=dict(l=0, r=0, t=30 if title else 5, b=30))
+    fig.update_layout(
+        font=_FONT,
+        legend_title_text="Rating",
+        margin=dict(l=0, r=0, t=30 if title else 5, b=30),
+        paper_bgcolor="rgba(0,0,0,0)",
+    )
     _annotate_source(fig, source_label)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -180,6 +198,7 @@ def distribution_histogram(
     )
     fig.update_xaxes(title_text=xaxis_title or col)
     fig.update_yaxes(title_text="Schools")
+    fig.update_layout(font=_FONT, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
     _annotate_source(fig, source_label)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -208,6 +227,7 @@ def box_plot(
         category_orders=category_orders,
         height=height,
     )
+    fig.update_layout(font=_FONT, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
     _annotate_source(fig, source_label)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -220,6 +240,6 @@ def _annotate_source(fig: go.Figure, source_label: str) -> None:
         x=1,
         y=-0.12,
         showarrow=False,
-        font=dict(size=10, color="#888888"),
+        font=dict(size=10, color="#94A3B8"),
         xanchor="right",
     )

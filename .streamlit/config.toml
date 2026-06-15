@@ -1,13 +1,15 @@
 [theme]
-primaryColor = "#1a6faf"
-backgroundColor = "#ffffff"
-secondaryBackgroundColor = "#f0f4f8"
-textColor = "#1a1a2e"
-font = "sans serif"
+primaryColor     = "#2F6B57"
+backgroundColor  = "#EEF2F0"
+# Light secondary so select boxes / sliders are NOT dark.
+# The sidebar gets its dark green via CSS, not this variable.
+secondaryBackgroundColor = "#F0F5F2"
+textColor        = "#1A1D23"
+font             = "sans serif"
 
 [server]
 headless = true
-port = 8501
+port     = 8501
 
 [browser]
 gatherUsageStats = false
